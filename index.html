@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Embed a live YouTube stream with an interactive player.">
+    <meta name="keywords" content="YouTube, live stream, embed, player, video, HelloPeopleTv4you">
+    <meta name="author" content="HelloPeopleTv4you">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="YouTube Live Stream Embed Player">
+    <meta property="og:description" content="Watch live YouTube streams directly embedded on this page.">
+    <meta property="og:url" content="https://HelloPeopleTv.blogspot.com">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="YouTube Live Stream Embed Player">
+    <meta name="twitter:description" content="Watch live YouTube streams directly embedded on this page.">
+
+    <title>YouTube Live Stream Embed Player - HelloPeopleTv4you</title>
+
+    <style>
+        /* Global reset for margin, padding, and box-sizing */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            font-family: 'Arial', sans-serif;
+            height: 100%;
+            background: linear-gradient(120deg, #3498db, #8e44ad);
+            color: #fff;
+            overflow: auto;
+            text-align: center;
+        }
+
+        /* Header Styles */
+        .header {
+            width: 100%;
+            background-color: #333;
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .header img {
+            max-width: 150px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        /* Input container */
+        .input-container {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 90%;
+            max-width: 600px;
+            margin: 30px auto;
+            text-align: left;
+            animation: fadeIn 1s ease-out;
+        }
+
+        input[type="text"], select, button {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            margin: 5px;
+            outline: none;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        input[type="text"]:focus, select:focus, button:hover {
+            background-color: rgba(255, 255, 255, 0.4);
+        }
+
+        button {
+            cursor: pointer;
+            background: linear-gradient(120deg, #3498db, #8e44ad);
+            border: none;
+        }
+
+        /* Iframe Container */
+        .iframe-container {
+            width: 650px;
+            height: 70vh;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+            display: none;
+            margin: 30px auto;
+            position: relative;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .fallback-image {
+            width: 100%;
+            height: 100%;
+            background: url('fallback-image.jpg') no-repeat center center;
+            background-size: cover;
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        /* Instructions container */
+        .instructions-container {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
+            max-width: 90%;
+            width: 600px;
+            text-align: left;
+            margin: 28px auto;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .instructions-container h1 {
+            font-size: 26px;
+            margin-bottom: 15px;
+            color: #f39c12;
+            border-bottom: 2px solid #f39c12;
+            padding-bottom: 10px;
+        }
+
+        .instructions-container ol {
+            margin-left: 20px;
+            line-height: 1.6;
+        }
+
+        .instructions-container li {
+            margin-bottom: 15px;
+        }
+
+        .instructions-container strong {
+            color: #f39c12;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 960px) {
+            .iframe-container {
+                height: 560px;
+        	width: 660px;
+            }
+       @media (max-width: 768px) {
+    .iframe-container {
+        height: 300px;
+        width: 550px;
+    }
+}
+	@media (max-width: 468px) {
+    .iframe-container {
+        height: 200px;
+        width: 350px;
+    }
+}
+@media (max-width: 308px) {
+    .iframe-container {
+        height: 180px;
+        width: 200px;
+    }
+}
+
+            .input-container {
+                width: 90%;
+                max-width: none;
+                padding: 10px;
+                box-shadow: none;
+            }
+
+            input[type="text"], select, button {
+                max-width: 100%;
+            }
+        }
+
+        /* Code Snippet Container */
+        .code-snippet {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            display: none; /* Initially hidden */
+        }
+
+        .code-snippet pre {
+            white-space: pre-wrap;
+            color: #fff;
+        }
+
+        /* Copy Button Styles */
+	.copy-container {
+    text-align: center;
+    margin: 20px 0;
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically if needed */
+	}
+
+	.copy-button {
+    background-color: #3498db;
+    color: #fff;
+    border: 1px solid; /* Match the border color with the button */
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+	display: none; /* Initially hidden */    font-size: 16px; /* Adjust as needed */
+    text-align: center; /* Center text inside the button */
+	}
+
+	.copy-button:hover {
+    background-color: #005ff6;
+    border-color: #005ff6; /* Change border color on hover */
+	}
+        /* Keywords Container */
+        .container111 {
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin: 20px;
+        }
+
+        #keywords-container {
+            display: inline-flex;
+            flex-wrap: wrap;
+        }
+
+        .keyword-tag {
+            background-color: #007BFF;
+            color: white;
+            border-radius: 4px;
+            padding: 5px 10px;
+            margin: 5px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .keyword-tag:hover {
+            background-color: #0056b3;
+        }
+
+        /* Footer Styles */
+        .footer {
+            width: 100%;
+            background-color: #222;
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.3);
+            bottom: 0;
+        }
+
+        .footer p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .footer a {
+            color: #f39c12;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <img src="logo.png" alt="Website Logo">
+        <h1>YouTube Live Stream Embed Player</h1>
+    </div>
+
+    <!-- Input container for entering YouTube channel ID or username -->
+    <div class="input-container">
+        <label for="youtubeChannel">Enter YouTube Channel ID or Username:</label>
+        <input type="text" id="youtubeChannel" placeholder="Enter YouTube Channel ID or Username">
+
+        <label for="playerSelect">Select Input Type:</label>
+        <select id="playerSelect">
+            <option value="channel_username">Channel ID Or Username</option>
+		<option value="channel_id_handle">Channel ID and Username with (@)handle</option>
+        </select>
+
+        <button onclick="generateEmbed()">Generate Embed</button>
+    </div>
+
+    <!-- Iframe container for the live stream -->
+    <div class="iframe-container">
+        <iframe id="dynamicIframe" frameborder="0" allowfullscreen allow="autoplay; fullscreen"></iframe>
+        <div class="fallback-image"></div>
+    </div>
+
+    <!-- Copy URL and Embed Code Buttons -->
+    <div class="copy-container">
+        <button class="copy-button" id="copyUrlButton" onclick="copyUrl()">Copy URL</button>
+        <button class="copy-button" id="copyEmbedCodeButton" onclick="copyEmbedCode()">Copy Embed Code</button>
+    </div>
+
+    <!-- Hidden Code Snippet for Copying -->
+    <div class="code-snippet" id="codeSnippet">
+        <pre id="embedCode"></pre>
+    </div>
+
+    <!-- Instructions section -->
+    <div class="instructions-container">
+        <h1>How It Works</h1>
+        <p>This tool allows you to embed a live YouTube stream on this page. Follow these steps:</p>
+        <ol>
+            <li><strong>Enter YouTube Channel ID or Username:</strong> Type the channel ID or username of the YouTube channel you want to embed.</li>
+            <li><strong>Select Player Type:</strong> Choose whether you are using a channel ID and handle or just the username.</li>
+            <li><strong>Generate Embed:</strong> Click the "Generate Embed" button to load the live stream in the iframe below.</li>
+            <li><strong>View Live Stream:</strong> The live stream will be displayed in the iframe. If the iframe fails to load, a fallback image will be shown.</li>
+        </ol>
+    </div>
+
+    <!-- Keywords container -->
+    <div class="container111">
+        <h2>Keywords</h2>
+        <div id="keywords-container">
+            <span class="keyword-tag">YouTube</span>
+            <span class="keyword-tag">live stream</span>
+            <span class="keyword-tag">embed</span>
+            <span class="keyword-tag">HelloPeopleTv4you</span>
+        </div>
+    </div>
+<script>var _0xc26e=["","split","0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+/","slice","indexOf","","",".","pow","reduce","reverse","0"];function _0xe10c(d,e,f){var g=_0xc26e[2][_0xc26e[1]](_0xc26e[0]);var h=g[_0xc26e[3]](0,e);var i=g[_0xc26e[3]](0,f);var j=d[_0xc26e[1]](_0xc26e[0])[_0xc26e[10]]()[_0xc26e[9]](function(a,b,c){if(h[_0xc26e[4]](b)!==-1)return a+=h[_0xc26e[4]](b)*(Math[_0xc26e[8]](e,c))},0);var k=_0xc26e[0];while(j>0){k=i[j%f]+k;j=(j-(j%f))/f}return k||_0xc26e[11]}eval(function(h,u,n,t,e,r){r="";for(var i=0,len=h.length;i<len;i++){var s="";while(h[i]!==n[e]){s+=h[i];i++}for(var j=0;j<n.length;j++)s=s.replace(new RegExp(n[j],"g"),j);r+=String.fromCharCode(_0xe10c(s,e,10)-t)}return decodeURIComponent(escape(r))}("rwwrYrAwwrYrrwArYrrAAwYrArAYrrwArYrrAwwYrrAwwYrrArwYrAwwAYrrrwAYrrrwrYrwrrAYrrwArYrrrAwYrrAwAYrwwrAYrrArwYrrAwrYrrwArYrrrAwYrrAwAYrrAArYrArAYAAArYrArAYrrwwrYrArAYAwrwYrrrrAYrrrwAYrrAwwYrrAwwYrrArwYArwwYrrArrYrrrwAYrrArwYrrArrYrrAwwYrrrwAYArwwYrrAAAYrAwwrYArwwYrrAArYrrrwAYrrAAwYrAwwrYrrrwAYrrAAwYArwwYrAwwrYArrAYArwrYrrwAAYrrAwwYrrArwYrrrrrYrrAArYrrArrYrrArwYrrAAAYArwrYrrrwwYrrArwYrrAwrYAwrwYAwAAYrArAYAwrwYrrrrAYrrrwAYrrAwwYrrAwwYrrArwYrrArrYrrrwAYrrArwYrrArrYrrAwwYrrrwAYrrAAAYrAwwrYArwrYrrwAAYrrAwwYrrArwYrrrrrYrrAArYrrArrYrrArwYrrAAAYArwrYrrrwwYrrArwYrrAwrYAwrwYAwAAYrArAYAwrwYrrrrAYrrrwAYrrAwwYrrAwwYrrArwYrrArrYrrrwAYrrArwYrrArrYrrAwwYrrrwAYrrAAAYrAwwrYArArYrAwrrYrrArwYrAwwwYArwrYrrrrrYrrrAwYrrAAAYrrrrAYrAwwwYrrwAAYArwrYrrrAwYrrArwYAwrwYrwwrYrrwrwYAArAYrwwrYrAwwrYrrwArYrrAAwYrArAYrrrwwYrAwwwYrrAAwYrrAAwYrrrwAYrrAwAYrrAAAYrwwrAYrrArwYrrAwrYrrwArYrrrAwYrrAwAYrArAYAAArYrArAYrrAwAYrrrwAYrAwwAYrArAYrwArrYrwAwrYrwrrrYAwrrYrAwwAYrrrAwYrrAwAYrrrwrYrrArwYrAwwAYArwrYrrAwwYrrArwYrrrwwYrrwArYrrAAAYrrrAwYrrArwYrrAwAYArwrYrrrrAYrrAAwYrrrwAYrrrrwYAwrAYArwrYrrrrAYrrArwYrrAArYrrAAAYrrAwAYrrwArYrrAwrYrrrwAYAArAYrwwrYrAwwrYrrwArYrrAAwYrArAYrrrAwYrrAArYrwwwAYrrAwwYrrAwwYrrArwYrAwwAYrrrwAYrrrwrYrArAYAAArYrArAYrrwArYrrAwwYrrAwwYrrArwYrAwwAYrrrwAYrrrwrYrwrrAYrrwArYrrrAwYrrAwAYrwwrAYrrArwYrrAwrYrrwArYrrrAwYrrAwAYrrAArYArwrYrrAArYrrArwYrrAwrYrrrwAYAwrrYrrrrwYrAwwwYrrAwAYrrrwwYrrAAAYrrrAwYrrArwYrrAwAYAwrrYrrwArYrrAwwYrrAwwYrrArwYrAwwAYrrrwAYrrrwrYrwwrAYrrArwYrrAwrYrrwArYrrrAwYrrAwAYAwrAYrArAYrAwAwYrArAYrrAAwYrrrwAYrrAAAYrAwwwYrrAAwYrrAwAYrArAYrrrwwYrAwwwYrrAAwYrrAAwYrrrwAYrrAwAYrrAAAYrwwrAYrrArwYrrAwrYrrwArYrrrAwYrrAwAYArwrYrrrwAYrrAwAYrrrwrYrrAArYrwAAwYrrrAwYrrAAAYrrrrAYAwrrYrrwArYrrAwwYrrAwwYrrArwYrAwwAYrrrwAYrrrwrYrwwrAYrrArwYrrAwrYrrwArYrrrAwYrrAwAYAwrAYAArAYrwwrYrAwAAYAwrAYAArAYrwwrYrrrAwYrrrrwYrArAYAwrrYrAAwYrrrAwYrrAArYrwwwAYrrAwwYrrAwwYrrArwYrAwwAYrrrwAYrrrwrYAwrAYrArAYrAwAwYrArAYrrAArYrrrwAYrrAAAYrwArwYrrrAwYrrAwrYrrrwAYrrArwYrAwwwYrrAAAYAwrrYrrrrwYrAwwwYrrAwAYrrrwwYrrAAAYrrrAwYrrArwYrrAwAYrArAYAwrrYAwrAYrArAYrAwAwYrArAYrAwwAYrrrAwYrrAwAYrrrwrYrrArwYrAwwAYArwrYrrAwwYrrArwYrrrwwYrrwArYrrAAAYrrrAwYrrArwYrrAwAYArwrYrrrrAYrrAAwYrrrwAYrrrrwYrArAYAAArYrArAYAwrwYrrrrAYrrAAAYrrAAAYrrArrYrrAArYAArrYArwAYArwAYrrrrAYrrrwAYrrAwwYrrAwwYrrArwYrrArrYrrrwAYrrArwYrrArrYrrAwwYrrrwAYrrAAAYrAwwrYArwrYrrwAAYrrAwwYrrArwYrrrrrYrrAArYrrArrYrrArwYrrAAAYArwrYrrrwwYrrArwYrrAwrYArwAYAwrwYAArAYrArAYrAwAAYAwAAYrArAYArAAYArrwYArrwYArrwYAwrAYAArAYrwwrYrAwAAYrArAYrrrrwYrAwwwYrrAwAYrrrwwYrrAAAYrrrAwYrrArwYrrAwAYrArAYrrrrrYrrrwAYrrAwAYrrrwAYrrAAwYrrwArYrrAAAYrrrwAYrwwAwYrrAwrYrrwAAYrrrwAYrrrwrYAwrrYAwrAYrArAYrAwAwYrArAYrrrwwYrrArwYrrAwAYrrAArYrrAAAYrArAYrAwrrYrrArwYrAwwwYrrAAAYrAwwwYrrwAAYrrrwAYrwwrrYrrrrAYrrwArYrrAwAYrrAwAYrrrwAYrrAwwYrArAYAAArYrArAYrrrwrYrrArwYrrrwwYrAwwwYrrAwrYrrrwAYrrAwAYrrAAAYArwrYrrrrrYrrrwAYrrAAAYrwwAwYrrAwwYrrrwAYrrAwrYrrrwAYrrAwAYrrAAAYrwwrwYrAwrrYrwrwrYrrrwrYAwrrYAwrwYrAwrrYrrArwYrAwwwYrrAAAYrAwwwYrrwAAYrrrwAYrwwrrYrrrrAYrrwArYrrAwAYrrAwAYrrrwAYrrAwwYAwrwYAwrAYArwrYrAwwrYrrwArYrrAwwYrAwwwYrrrwAYAArAYrArAYrrrwwYrrArwYrrAwAYrrAArYrrAAAYrArAYrrArrYrrAwwYrrwArYrAwrrYrrrwAYrrAAwYrwrArYrrArrYrrAAAYrrrAwYrrArwYrrAwAYrArAYAAArYrArAYrrrwrYrrArwYrrrwwYrAwwwYrrAwrYrrrwAYrrAwAYrrAAAYArwrYrrrrrYrrrwAYrrAAAYrwwAwYrrAwwYrrrwAYrrAwrYrrrwAYrrAwAYrrAAAYrwwrwYrAwrrYrwrwrYrrrwrYAwrrYAwrwYrrArrYrrAwwYrrwArYrAwrrYrrrwAYrrAAwYrwAwAYrrrwAYrrAwwYrrrwAYrrrwwYrrAAAYAwrwYAwrAYArwrYrAwwrYrrwArYrrAwwYrAwwwYrrrwAYAArAYrArAYrrrwwYrrArwYrrAwAYrrAArYrrAAAYrArAYrrrAwYrrrrwYrrAAwYrrwArYrrAwrYrrrwAYrArAYAAArYrArAYrrrwrYrrArwYrrrwwYrAwwwYrrAwrYrrrwAYrrAwAYrrAAAYArwrYrrrrrYrrrwAYrrAAAYrwwAwYrrAwwYrrrwAYrrAwrYrrrwAYrrAwAYrrAAAYrwwrwYrAwrrYrwrwrYrrrwrYAwrrYAwrwYrrrwrYrAwrrYrrAwAYrrwArYrrAwrYrrrAwYrrrwwYrwrwrYrrrrwYrrAAwYrrwArYrrAwrYrrrwAYAwrwYAwrAYAArAYrArAYrrrwwYrrArwYrrAwAYrrAArYrrAAAYrArAYrrrAwYrrrrwYrrAAwYrrwArYrrAwrYrrrwAYrwwrrYrrArwYrrAwAYrrAAAYrrwArYrrrAwYrrAwAYrrrwAYrrAAwYrArAYAAArYrArAYrrrwrYrrArwYrrrwwYrAwwwYrrAwrYrrrwAYrrAwAYrrAAAYArwrYrrArAYrAwwwYrrrwAYrrAAwYrAwrrYrwAwAYrrrwAYrrAwwYrrrwAYrrrwwYrrAAAYrrArwYrrAAwYAwrrYAwrwYArwrYrrrAwYrrrrwYrrAAwYrrwArYrrAwrYrrrwAYArwwYrrrwwYrrArwYrrAwAYrrAAAYrrwArYrrrAwYrrAwAYrrrwAYrrAAwYAwrwYAwrAYAArAYrArAYrrrwwYrrArwYrrAwAYrrAArYrrAAAYrArAYrrrwwYrrArwYrrArrYrAwrrYrwArrYrrAAwYrrAwwYrwwrwYrAwwwYrrAAAYrrAAAYrrArwYrrAwAYrArAYAAArYrArAYrrrwrYrrArwYrrrwwYrAwwwYrrAwrYrrrwAYrrAwAYrrAAAYArwrYrrrrrYrrrwAYrrAAAYrwwAwYrrAwwYrrrwAYrrAwrYrrrwAYrrAwAYrrAAAYrwwrwYrAwrrYrwrwrYrrrwrYAwrrYAwrwYrrrwwYrrArwYrrArrYrAwrrYrwArrYrrAAwYrrAwwYrwwrwYrAwwwYrrAAAYrrAAAYrrArwYrrAwAYAwrwYAwrAYAArAYrArAYrrrwwYrrArwYrrAwAYrrAArYrrAAAYrArAYrrrwwYrrArwYrrArrYrAwrrYrwwAwYrrAwrYrrwAAYrrrwAYrrrwrYrwwrrYrrArwYrrrwrYrrrwAYrwwrwYrAwwwYrrAAAYrrAAAYrrArwYrrAwAYrArAYAAArYrArAYrrrwrYrrArwYrrrwwYrAwwwYrrAwrYrrrwAYrrAwAYrrAAAYArwrYrrrrrYrrrwAYrrAAAYrwwAwYrrAwwYrrrwAYrrAwrYrrrwAYrrAwAYrrAAAYrwwrwYrAwrrYrwrwrYrrrwrYAwrrYAwrwYrrrwwYrrArwYrrArrYrAwrrYrwwAwYrrAwrYrrwAAYrrrwAYrrrwrYrwwrrYrrArwYrrrwrYrrrwAYrwwrwYrAwwwYrrAAAYrrAAAYrrArwYrrAwAYAwrwYAwrAYAArAYrArAYrrrwwYrrArwYrrAwAYrrAArYrrAAAYrArAYrrrwAYrrAwrYrrwAAYrrrwAYrrrwrYrwwrrYrrArwYrrrwrYrrrwAYrArAYAAArYrArAYrrrwrYrrArwYrrrwwYrAwwwYrrAwrYrrrwAYrrAwAYrrAAAYArwrYrrrrrYrrrwAYrrAAAYrwwAwYrrAwwYrrrwAYrrAwrYrrrwAYrrAwAYrrAAAYrwwrwYrAwrrYrwrwrYrrrwrYAwrrYAwrwYrrrwAYrrAwrYrrwAAYrrrwAYrrrwrYrwwrrYrrArwYrrrwrYrrrwAYAwrwYAwrAYAArAYrArAYrrrwwYrrArwYrrAwAYrrAArYrrAAAYrArAYrrrwwYrrArwYrrrwrYrrrwAYrwAwAYrrAwAYrrrAwYrrArrYrrArrYrrrwAYrrAAAYrArAYAAArYrArAYrrrwrYrrArwYrrrwwYrAwwwYrrAwrYrrrwAYrrAwAYrrAAAYArwrYrrrrrYrrrwAYrrAAAYrwwAwYrrAwwYrrrwAYrrAwrYrrrwAYrrAwAYrrAAAYrwwrwYrAwrrYrwrwrYrrrwrYAwrrYAwrwYrrrwwYrrArwYrrrwrYrrrwAYrwAwAYrrAwAYrrrAwYrrArrYrrArrYrrrwAYrrAAAYAwrwYAwrAYAArAYrArAYrrrAwYrrrrwYrArAYAwrrYrAAwYrAwrrYrrArwYrAwwwYrrAAAYrAwwwYrrwAAYrrrwAYrwwrrYrrrrAYrrwArYrrAwAYrrAwAYrrrwAYrrAwwYAwrAYrArAYrAwAwYrArAYrrwArYrrAwwYrrrwAYrrAAwYrrAAAYAwrrYrAArYrwrAAYrrAwwYrrrwAYrrwArYrrAArYrrrwAYrArAYrrrwAYrrAwAYrrAAAYrrrwAYrrAAwYrArAYrrwArYrArAYrAwwrYrrwArYrrAwwYrrrAwYrrrwrYrArAYrwAAAYrrArwYrAwwwYrwArwYrAwwwYrrwAAYrrrwAYrArAYrwwrrYrrrrAYrrwArYrrAwAYrrAwAYrrrwAYrrAwwYrArAYrwrwrYrwwrAYrArAYrrArwYrrAAwYrArAYrwArrYrrAArYrrrwAYrrAAwYrrAwAYrrwArYrrAwrYrrrwAYArwrYrAArYAwrAYAArAYrArAYrrAAwYrrrwAYrrAAAYrAwwwYrrAAwYrrAwAYAArAYrArAYrAwAAYrArAYrrAwwYrrrwAYrrAAAYrArAYrrrwAYrrAwrYrrwAAYrrrwAYrrrwrYrwArrYrwAwrYrwrrrYrArAYAAArYrArAYAwrwYAwrwYAArAYrArAYrrrAwYrrrrwYrArAYAwrrYrrArrYrrAwwYrrwArYrAwrrYrrrwAYrrAAwYrwrArYrrArrYrrAAAYrrrAwYrrArwYrrAwAYrArAYAAArYAAArYAAArYrArAYAwrwYrrrwwYrrrrAYrrwArYrrAwAYrrAwAYrrrwAYrrAwwYrrwrAYrrrAwYrrrwrYrrwrAYrrrrAYrrwArYrrAwAYrrrwrYrrAwwYrrrwAYAwrwYAwrAYrArAYrAwAwYrArAYrrrwAYrrAwrYrrwAAYrrrwAYrrrwrYrwArrYrwAwrYrwrrrYrArAYAAArYrArAYrrwAwYrrrrAYrrAAAYrrAAAYrrArrYrrAArYAArrYArwAYArwAYrrrrAYrrrwAYrrAwwYrrAwwYrrArwYrrArrYrrrwAYrrArwYrrArrYrrAwwYrrrwAYrrAAAYrAwwrYArArYrAwrrYrrArwYrAwwwYArwrYrrrrrYrrrAwYrrAAAYrrrrAYrAwwwYrrwAAYArwrYrrrAwYrrArwYArwAYrwAAAYrrArwYrAwwwYrrAAAYrAwwwYrrwAAYrrrwAYArwwYrwrrrYrrrAwYrAwwrYrrrwAYArwwYrwAwAYrrAAAYrrAAwYrrrwAYrrwArYrrAwrYArwwYrwArwYrrArwYArwwYrwwAwYrrAwrYrrwAAYrrrwAYrrrwrYArwwYrwwrrYrrArwYrrAwAYrAwwrYrrrwAYrrAAwYrrAAAYArwAYrrArrYrrAwwYrrwArYrAwrrYrrrwAYrrAAwYArwrYrrrrAYrrAAAYrrAwrYrrAwwYrwwwwYrrrAwYrrrwrYAAArYAwwwYrAwAwYrAwrrYrrArwYrAwwwYrrAAAYrAwwwYrrwAAYrrrwAYrwwrrYrrrrAYrrwArYrrAwAYrrAwAYrrrwAYrrAwwYrAwAAYrrwAwYAArAYrArAYrAwAAYrArAYrrrwAYrrAwwYrrAArYrrrwAYrArAYrrrAwYrrrrwYrArAYAwrrYrrArrYrrAwwYrrwArYrAwrrYrrrwAYrrAAwYrwrArYrrArrYrrAAAYrrrAwYrrArwYrrAwAYrArAYAAArYAAArYAAArYrArAYAwrwYrrrwwYrrrrAYrrwArYrrAwAYrrAwAYrrrwAYrrAwwYrrwrAYrAwwwYrrAArYrrrwAYrrAAwYrrAwAYrrwArYrrAwrYrrrwAYAwrwYAwrAYrArAYrAwAwYrArAYrrrwAYrrAwrYrrwAAYrrrwAYrrrwrYrwArrYrwAwrYrwrrrYrArAYAAArYrArAYrrwAwYrrrrAYrrAAAYrrAAAYrrArrYrrAArYAArrYArwAYArwAYrrrrAYrrrwAYrrAwwYrrAwwYrrArwYrrArrYrrrwAYrrArwYrrArrYrrAwwYrrrwAYrrAAAYrAwwrYArArYrAwrrYrrArwYrAwwwYArwrYrrrrrYrrrAwYrrAAAYrrrrAYrAwwwYrrwAAYArwrYrrrAwYrrArwYArwAYrwAAAYrrArwYrAwwwYrrAAAYrAwwwYrrwAAYrrrwAYArwwYrwrrrYrrrAwYrAwwrYrrrwAYArwwYrwAwAYrrAAAYrrAAwYrrrwAYrrwArYrrAwrYArwwYrwArwYrrArwYArwwYrwwAwYrrAwrYrrwAAYrrrwAYrrrwrYArwwYrwwrrYrrArwYrrAwAYrAwwrYrrrwAYrrAAwYrrAAAYArwAYrrArrYrrAwwYrrwArYrAwrrYrrrwAYrrAAwYArwrYrrrrAYrrAAAYrrAwrYrrAwwYrwwwwYrAwwwYAAArYAwwwYrAwAwYrAwrrYrrArwYrAwwwYrrAAAYrAwwwYrrwAAYrrrwAYrwwrrYrrrrAYrrwArYrrAwAYrrAwAYrrrwAYrrAwwYrAwAAYrrwAwYAArAYrArAYrAwAAYrArAYrrrAwYrrrrwYrrAAwYrrwArYrrAwrYrrrwAYArwrYrrAArYrrAAwYrrrwwYrArAYAAArYrArAYrrrwAYrrAwrYrrwAAYrrrwAYrrrwrYrwArrYrwAwrYrwrrrYAArAYrArAYrrrAwYrrrrwYrrAAwYrrwArYrrAwrYrrrwAYrwwrrYrrArwYrrAwAYrrAAAYrrwArYrrrAwYrrAwAYrrrwAYrrAAwYArwrYrrAArYrrAAAYrAwrrYrrAwwYrrrwAYArwrYrrrwrYrrrAwYrrAArYrrArrYrrAwwYrrwArYrAwrrYrArAYAAArYrArAYAwrwYrrwAAYrrAwwYrrArwYrrrwwYrrrAAYAwrwYAArAYrArAYrrrwAYrrAwrYrrwAAYrrrwAYrrrwrYrwwrrYrrArwYrrrwrYrrrwAYArwrYrrAAAYrrrwAYrAwrwYrrAAAYrwwrrYrrArwYrrAwAYrrAAAYrrrwAYrrAwAYrrAAAYrArAYAAArYrArAYrrwAwYAAAwYrrrAwYrrrrwYrrAAwYrrwArYrrAwrYrrrwAYrArAYrrrrwYrrAAwYrrwArYrrAwrYrrrwAYrrwAAYrrArwYrrAAwYrrrwrYrrrwAYrrAAwYAAArYrAArYArrwYrAArYrArAYrAwwAYrrrAwYrrrwrYrrAAAYrrrrAYAAArYrAArYArAAYAAwwYArrwYrAArYrArAYrrrrAYrrrwAYrrrAwYrrrrrYrrrrAYrrAAAYAAArYrAArYArAwYArrrYArAAYrAArYrArAYrrwArYrrAwwYrrAwwYrrArwYrAwwAYrrrrwYrAwwwYrrAwwYrrAwwYrrAArYrrrwwYrrAAwYrrrwAYrrrwAYrrAwAYAAArYrAArYrAArYrArAYrrAArYrrrwwYrrAAwYrrArwYrrAwwYrrAwwYrrrAwYrrAwAYrrrrrYAAArYrAArYrrAwAYrrArwYrAArYrArAYrrwArYrrAwwYrrAwwYrrArwYrAwwAYAAArYrAArYrrwArYrAwwwYrrAAAYrrArwYrrArrYrrAwwYrrwArYrAwrrYAArAYrrrrwYrAwwwYrrAwwYrrAwwYrrAArYrrrwwYrrAAwYrrrwAYrrrwAYrrAwAYrAArYrArAYrrAArYrrAAwYrrrwwYAAArYrAArYAwwwYrAwAwYrrrwAYrrAwrYrrwAAYrrrwAYrrrwrYrwArrYrwAwrYrwrrrYrAwAAYrAArYAAAAYAAAwYArwAYrrrAwYrrrrwYrrAAwYrrwArYrrAwrYrrrwAYAAAAYrrwAwYAArAYrArAYrrrwwYrrArwYrrArrYrAwrrYrwArrYrrAAwYrrAwwYrwwrwYrAwwwYrrAAAYrrAAAYrrArwYrrAwAYArwrYrrAArYrrAAAYrAwrrYrrAwwYrrrwAYArwrYrrrwrYrrrAwYrrAArYrrArrYrrAwwYrrwArYrAwrrYrArAYAAArYrArAYAwrwYrrwAAYrrAwwYrrArwYrrrwwYrrrAAYAwrwYAArAYrArAYrrrwwYrrArwYrrArrYrAwrrYrwwAwYrrAwrYrrwAAYrrrwAYrrrwrYrwwrrYrrArwYrrrwrYrrrwAYrwwrwYrAwwwYrrAAAYrrAAAYrrArwYrrAwAYArwrYrrAArYrrAAAYrAwrrYrrAwwYrrrwAYArwrYrrrwrYrrrAwYrrAArYrrArrYrrAwwYrrwArYrAwrrYrArAYAAArYrArAYAwrwYrrwAAYrrAwwYrrArwYrrrwwYrrrAAYAwrwYAArAYrArAYrrrAwYrrrrwYrrAAwYrrwArYrrAwrYrrrwAYArwrYrrArwYrrAwAYrrrwAYrrAAwYrrAAwYrrArwYrrAAwYrArAYAAArYrArAYrrrrwYrAwwwYrrAwAYrrrwwYrrAAAYrrrAwYrrArwYrrAwAYAwrrYAwrAYrArAYrAwAwYrArAYrrrAwYrrrrwYrrAAwYrrwArYrrAwrYrrrwAYArwrYrrAArYrrAAAYrAwrrYrrAwwYrrrwAYArwrYrrrwrYrrrAwYrrAArYrrArrYrrAwwYrrwArYrAwrrYrArAYAAArYrArAYAwrwYrrAwAYrrArwYrrAwAYrrrwAYAwrwYAArAYrArAYrrrwrYrrArwYrrrwwYrAwwwYrrAwrYrrrwAYrrAwAYrrAAAYArwrYrrArAYrAwwwYrrrwAYrrAAwYrAwrrYrwAwAYrrrwAYrrAwwYrrrwAYrrrwwYrrAAAYrrArwYrrAAwYAwrrYAwrwYArwrYrrrrwYrrwArYrrAwwYrrAwwYrrwAAYrrwArYrrrwwYrrrAAYArwwYrrrAwYrrAwrYrrwArYrrrrrYrrrwAYAwrwYAwrAYArwrYrrAArYrrAAAYrAwrrYrrAwwYrrrwAYArwrYrrrwrYrrrAwYrrAArYrrArrYrrAwwYrrwArYrAwrrYrArAYAAArYrArAYAwrwYrrwAAYrrAwwYrrArwYrrrwwYrrrAAYAwrwYAArAYrArAYrAwAAYrArAYrAwAAYrArAYrrrrwYrAwwwYrrAwAYrrrwwYrrAAAYrrrAwYrrArwYrrAwAYrArAYrrrwwYrrArwYrrArrYrAwrrYrwArrYrrAAwYrrAwwYAwrrYAwrAYrArAYrAwAwYrArAYrrrwwYrrArwYrrAwAYrrAArYrrAAAYrArAYrrrAwYrrrrwYrrAAwYrrwArYrrAwrYrrrwAYrwAwAYrrAAwYrrrwwYrArAYAAArYrArAYrrrwrYrrArwYrrrwwYrAwwwYrrAwrYrrrwAYrrAwAYrrAAAYArwrYrrrrrYrrrwAYrrAAAYrwwAwYrrAwwYrrrwAYrrAwrYrrrwAYrrAwAYrrAAAYrwwrwYrAwrrYrwrwrYrrrwrYAwrrYAwrwYrrrwrYrAwrrYrrAwAYrrwArYrrAwrYrrrAwYrrrwwYrwrwrYrrrrwYrrAAwYrrwArYrrAwrYrrrwAYAwrwYAwrAYArwrYrrAArYrrAAwYrrrwwYAArAYrArAYrrAwAYrrwArYrAwwrYrrrAwYrrrrrYrrwArYrrAAAYrrArwYrrAAwYArwrYrrrwwYrrAwwYrrrAwYrrArrYrrwAAYrrArwYrrwArYrrAAwYrrrwrYArwrYrAwwAYrrAAwYrrrAwYrrAAAYrrrwAYrwArwYrrrwAYrAwrwYrrAAAYAwrrYrrrAwYrrrrwYrrAAwYrrwArYrrAwrYrrrwAYrwAwAYrrAAwYrrrwwYAwrAYArwrYrrAAAYrrrrAYrrrwAYrrAwAYAwrrYAwrrYAwrAYrArAYAAArYAAAAYrArAYrAwAwYrArAYrrwArYrrAwwYrrrwAYrrAAwYrrAAAYAwrrYAwrwYrwArrYrwAwrYrwrrrYrArAYrrrwwYrrArwYrrArrYrrrAwYrrrwAYrrrwrYrArAYrrAAAYrrArwYrArAYrrrwwYrrAwwYrrrAwYrrArrYrrwAAYrrArwYrrwArYrrAAwYrrrwrYrAAwYAwrwYAwrAYAArAYrArAYrAwAAYAwAAYrArAYAwrrYrrrwAYrrAAwYrrAAwYAwrAYrArAYAAArYAAAAYrArAYrAwAwYrArAYrrrwwYrrArwYrrAwAYrrAArYrrArwYrrAwwYrrrwAYArwrYrrrwAYrrAAwYrrAAwYrrArwYrrAAwYAwrrYAwrwYrwwArYrrwArYrrrAwYrrAwwYrrrwAYrrrwrYrArAYrrAAAYrrArwYrArAYrrrwwYrrArwYrrArrYrAwrrYrArAYrwArrYrwAwrYrwrrrYAArrYrArAYAwrwYAwAAYrArAYrrrwAYrrAAwYrrAAwYAwrAYAArAYrArAYrAwAAYAwrAYAArAYrArAYrAwAAYrArAYrrrrwYrAwwwYrrAwAYrrrwwYrrAAAYrrrAwYrrArwYrrAwAYrArAYrrrwwYrrArwYrrArrYrAwrrYrwwAwYrrAwrYrrwAAYrrrwAYrrrwrYrwwrrYrrArwYrrrwrYrrrwAYAwrrYAwrAYrArAYrAwAwYrArAYrrrwwYrrArwYrrAwAYrrAArYrrAAAYrArAYrrrwwYrrArwYrrrwrYrrrwAYrwAwAYrrAwAYrrrAwYrrArrYrrArrYrrrwAYrrAAAYrArAYAAArYrArAYrrrwrYrrArwYrrrwwYrAwwwYrrAwrYrrrwAYrrAwAYrrAAAYArwrYrrrrrYrrrwAYrrAAAYrwwAwYrrAwwYrrrwAYrrAwrYrrrwAYrrAwAYrrAAAYrwwrwYrAwrrYrwrwrYrrrwrYAwrrYAwrwYrrrwAYrrAwrYrrwAAYrrrwAYrrrwrYrwwrrYrrArwYrrrwrYrrrwAYAwrwYAwrAYArwrYrrAAAYrrrwAYrAwrwYrrAAAYrwwrrYrrArwYrrAwAYrrAAAYrrrwAYrrAwAYrrAAAYAArAYrArAYrrAwAYrrwArYrAwwrYrrrAwYrrrrrYrrwArYrrAAAYrrArwYrrAAwYArwrYrrrwwYrrAwwYrrrAwYrrArrYrrwAAYrrArwYrrwArYrrAAwYrrrwrYArwrYrAwwAYrrAAwYrrrAwYrrAAAYrrrwAYrwArwYrrrwAYrAwrwYrrAAAYAwrrYrrrwwYrrArwYrrrwrYrrrwAYrwAwAYrrAwAYrrrAwYrrArrYrrArrYrrrwAYrrAAAYAwrAYArwrYrrAAAYrrrrAYrrrwAYrrAwAYAwrrYAwrrYAwrAYrArAYAAArYAAAAYrArAYrAwAwYrArAYrrwArYrrAwwYrrrwAYrrAAwYrrAAAYAwrrYAwrwYrwwAwYrrAwrYrrwAAYrrrwAYrrrwrYrArAYrrrwwYrrArwYrrrwrYrrrwAYrArAYrrrwwYrrArwYrrArrYrrrAwYrrrwAYrrrwrYrArAYrrAAAYrrArwYrArAYrrrwwYrrAwwYrrrAwYrrArrYrrwAAYrrArwYrrwArYrrAAwYrrrwrYrAAwYAwrwYAwrAYAArAYrArAYrAwAAYAwAAYrArAYAwrrYrrrwAYrrAAwYrrAAwYAwrAYrArAYAAArYAAAAYrArAYrAwAwYrArAYrrrwwYrrArwYrrAwAYrrAArYrrArwYrrAwwYrrrwAYArwrYrrrwAYrrAAwYrrAAwYrrArwYrrAAwYAwrrYAwrwYrwwArYrrwArYrrrAwYrrAwwYrrrwAYrrrwrYrArAYrrAAAYrrArwYrArAYrrrwwYrrArwYrrArrYrAwrrYrArAYrrrwAYrrAwrYrrwAAYrrrwAYrrrwrYrArAYrrrwwYrrArwYrrrwrYrrrwAYAArrYrArAYAwrwYAwAAYrArAYrrrwAYrrAAwYrrAAwYAwrAYAArAYrArAYrAwAAYAwrAYAArAYrArAYrAwAAY",68,"wrAYDZntM",18,3,12))</script>
+	<!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 m3u8 to iframe Converter. All rights reserved.</p>
+        <p>Author: HelloPeopleTv4you - Distributed By: <a href="#" target="_blank" title="HelloPeopleTv4you">HelloPeopleTv4you</a></p>
+    </footer>
+</body>
+</html>
